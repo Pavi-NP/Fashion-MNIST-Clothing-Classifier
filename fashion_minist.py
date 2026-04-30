@@ -5,17 +5,6 @@
 # Author: Pavi (Computer Vision Engineer Intern)
 # ============================================
 
-# pip install numpy -q
-# pip install panda -q
-# pip install matplotlib -q
-# pip install tensorflow -q
-
-# pip install opendatasets -q # Kaggle dataset downloader
-# pip install scikit-learn
-# pip install seaborn
-
-
-# fashion_minist.py
 # Import libraries
 import tensorflow as tf
 from tensorflow.keras import layers, models
@@ -61,21 +50,6 @@ data_augmentation = models.Sequential([
     layers.RandomTranslation(0.1, 0.1)
 ])
 
-
-# # Better augmentation pipeline
-# data_augmentation = models.Sequential([
-#     layers.RandomFlip("horizontal"),  # CRITICAL for clothing symmetry
-#     layers.RandomRotation(0.1),
-#     layers.RandomZoom(0.1),
-#     layers.RandomTranslation(0.1, 0.1),
-#     layers.RandomBrightness(0.1),  # Added
-# ])
-# Test Accuracy: 0.6913999915122986
-
-# Deeper architecture with residual connections (simplified example)
-# Or switch to ResNet18/50 pre-trained architecture for better performance
-
-
 # ============================================
 # CNN Model Architecture
 # ============================================
@@ -90,30 +64,18 @@ model = models.Sequential([
     layers.BatchNormalization(), # Added batch normalization for better training stability
     layers.MaxPooling2D((2,2)),
 
-    # Second convolution block
+    # Second convolution block with batch normalization
     layers.Conv2D(64, (3,3), activation='relu'),
     layers.BatchNormalization(), # Added batch normalization for better training stability
     layers.MaxPooling2D((2,2)),
 
-    # Third convolution block
+    # Third convolution block with batch normalization
     layers.Conv2D(128, (3,3), activation='relu'),
     layers.BatchNormalization(), # Added batch normalization for better training stability
     #layers.MaxPooling2D((2,2)),
-    
-    #------
-    # # Flatten layer
-    # layers.Flatten(),
-
-    # # Dense layers
-    # layers.Dense(128, activation='relu'),
-
-    # - - - - - -
-    # This is more robust to spatial shifts from augmentation
 
     layers.GlobalAveragePooling2D(),  # Averages each feature map
     layers.Dense(128, activation='relu'),
-    
-    #----------
 
     # Dropout regularization
     layers.Dropout(0.5),
@@ -121,11 +83,6 @@ model = models.Sequential([
     # Output layer
     layers.Dense(10, activation='softmax')
 ])
-
-
-# # Model summary
-# model.summary()
-
 
 # ============================================
 # Compile Model
@@ -136,7 +93,6 @@ model.compile(
     loss='sparse_categorical_crossentropy',
     metrics=['accuracy']
 )
-
 
 # ============================================
 # callbacks: EarlyStopping & ReduceLROnPlateau
@@ -151,7 +107,6 @@ early_stop = tf.keras.callbacks.EarlyStopping(
 lr_schedule = tf.keras.callbacks.ReduceLROnPlateau(
     monitor='val_loss', factor=0.5, patience=2, verbose=1
 )
-
 
 # ============================================
 # Train Model
@@ -192,7 +147,6 @@ plt.legend(["Train","Validation"])
 
 plt.show()
 
-
 # ============================================
 # Evaluate Model
 # ============================================
@@ -204,7 +158,6 @@ test_loss, test_accuracy = model.evaluate(
 
 print("\nTest Accuracy:", test_accuracy)
 
-
 # ============================================
 # Predictions
 # ============================================
@@ -212,7 +165,6 @@ print("\nTest Accuracy:", test_accuracy)
 predictions = model.predict(test_images)
 
 predicted_labels = np.argmax(predictions, axis=1)
-
 
 # ============================================
 # Confusion Matrix
@@ -236,7 +188,6 @@ plt.xlabel("Predicted Label")
 plt.ylabel("True Label")
 
 plt.show()
-
 
 # ============================================
 # Example Prediction Visualization
