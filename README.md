@@ -13,7 +13,6 @@ A deep learning-based image classifier for the Fashion-MNIST dataset, achieving 
 - [Architecture](#architecture)
 - [Performance](#performance)
 - [Installation](#installation)
-- [Usage](#usage)
 - [Results](#results)
 - [Technical Deep Dive](#technical-deep-dive)
 - [Future Improvements](#future-improvements)
@@ -43,9 +42,9 @@ A deep learning-based image classifier for the Fashion-MNIST dataset, achieving 
 - **Comprehensive Evaluation**: Confusion matrix, training curves, per-class analysis
 - **Visualization**: Sample predictions with true vs predicted labels
 
-## 🏗️ Architecture
+## 🏗️ CNN Architecture for Fashion Classification
 
-
+<img width="1024" height="1536" alt="Architecture_MNIST" src="https://github.com/user-attachments/assets/2b4c9ec6-72e2-4174-a14d-22a34a122ac3" />
 
 **Total Parameters**: ~1.2M
 
@@ -96,7 +95,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 📊 Results
+## 📊 Results
 
 **Accuracy and Loss**
 <img width="452" height="193" alt="image" src="https://github.com/user-attachments/assets/72151a4c-f69e-4d35-8888-ee174d123d69" />
@@ -108,4 +107,29 @@ pip install -r requirements.txt
 <img width="452" height="330" alt="image" src="https://github.com/user-attachments/assets/6cf91595-3eda-4c53-b395-40e3327d316c" />
 
 
+## 🔬 Technical Deep Dive
 
+**Why 83% and Not Higher?**
+
+Fashion-MNIST is intentionally more challenging than MNIST due to:
+
+- **Fine-grained distinctions:** Shirt vs Pullover vs T-shirt have similar silhouettes
+- **Limited resolution:** 28×28 pixels forces reliance on texture over shape
+- **No color information:** Grayscale removes another discriminative dimension
+**Human performance on this dataset is only 83.5%** - our model matches human-level accuracy!
+
+## 🔮 Future Improvements
+
+- ResNet18/34 architecture for 90%+ accuracy
+- Learning rate warmup and cosine annealing
+- MixUp augmentation for better generalization
+- Ensemble methods (multiple models)
+- Grad-CAM visualization for model interpretability
+- TensorFlow Serving deployment
+- Web interface using Streamlit/Gradio
+
+## 🙏 Acknowledgments
+
+- Zalando Research for creating the Fashion-MNIST dataset
+- TensorFlow/Keras team for the excellent deep learning framework
+- Fashion-MNIST community for benchmarks and insights
